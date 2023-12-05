@@ -50,6 +50,7 @@ def get_all_notes(current_user: str = Depends(get_current_user)):
     # if start_date and end_date:
     #     notes = crud.get_all(current_user)
     # else:
+    #comment
     notes = crud.get_all(current_user)
     return notes
 
