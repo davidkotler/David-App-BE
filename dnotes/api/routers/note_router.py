@@ -46,7 +46,7 @@ def get_all_notes(current_user: str = Depends(get_current_user)):
     """
     print("enter get funcion")
     crud = create_note_crud()
-    #add comments
+
     notes = crud.get_all(current_user)
     return notes
 
