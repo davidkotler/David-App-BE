@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from dnotes.settings import settings
 
-engine = create_engine(settings.db_str) #need to add real db
+engine = create_engine(settings.db_str) #need to add real DBgt
 Session = sessionmaker(bind=engine)
 
 
