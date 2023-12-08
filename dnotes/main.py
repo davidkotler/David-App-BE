@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from dnotes.api.routers.note_router import router
 from auth.routers.auth_router import router as auth_router
 import uvicorn
-
+from dnotes.db import init_db
 from settings import settings
 
 app = FastAPI()
