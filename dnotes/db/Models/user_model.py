@@ -15,4 +15,4 @@ class User(Base):
     password = Column(String, nullable=False)
     created_at = Column(DateTime, server_default=func.now())
 
-    notes = relationship("Note", back_populates="notes")
+    notes = relationship("Note", back_populates="owner")

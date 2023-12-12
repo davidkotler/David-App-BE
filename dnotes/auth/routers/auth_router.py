@@ -9,7 +9,11 @@ from fastapi.security import OAuth2PasswordRequestForm
 from dnotes.auth.services.handle_login import check_user_login_data
 from dnotes.auth.token import create_access_token
 from dnotes.db.Crud.UserCrud import create_user_crud
-from dnotes.schemas.user import UserCreate, UserLogin
+from dnotes.schemas.user import UserCreate, UserLogin, UserUpdate
+from dnotes.db.dependency import Session, get_db
+
+
+
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 router = APIRouter()
@@ -24,8 +28,8 @@ def register(user: UserCreate):
 
 
 @router.post("/login", status_code=200)
-def user_login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):  # add OAuth2PasswordRequestForm later
-    if not (check_user_login_data(form_data.username, form_data.password)):
+def user_login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Session = Depends(get_db)):
+    if not (check_user_login_data(form_data.username, form_data.password, db)):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
     # username = form_data.username
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -34,3 +38,17 @@ def user_login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):  # a
     )
     print(access_token)
     return {"access_token": access_token, "token_type": "bearer"}
+
+
+# @router.put("/update_user/{user_id}", status_code=200)
+# def update_user(user_id, user: UserUpdate, current_user: str = Depends(get_current_user)):
+#
+#     if current_user != user_id:
+#         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="you dont have premission")
+#
+#     crud = create_user_crud()
+#     updated = crud.update(user_id, user)
+#
+#     if not updated:
+#         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="failed to update user")
+

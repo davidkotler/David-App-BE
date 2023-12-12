@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, MetaData
-from dependency import Base, engine
+from dnotes.db.dependency import Base,engine
 
 
 def init_db():

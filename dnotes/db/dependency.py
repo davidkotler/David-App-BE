@@ -3,12 +3,10 @@ from sqlalchemy.orm import sessionmaker , declarative_base
 from sqlalchemy import create_engine, MetaData
 from dnotes.settings import settings
 
-engine = create_engine(settings.db_str) #need to add real DBgt
-Session = sessionmaker(bind=engine)
+engine = create_engine(settings.db_str)
+Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
-
-Base.metadata.create_all(bind=engine)
 
 
 def get_db() -> Generator:

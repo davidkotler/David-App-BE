@@ -8,6 +8,9 @@ from settings import settings
 
 app = FastAPI()
 
+init_db.init_db()  # initialize db
+
+
 # Add CORS middleware to allow all origins and methods
 app.add_middleware(
     CORSMiddleware,
